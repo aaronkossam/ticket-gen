@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Mobilebg from "../assets/images/background-mobile.png";
-import Desktopbg from "../assets/images/background-desktop.png";
-import Ticketbg from "../assets/images/pattern-ticket.svg";
+import Mobilebg from "/images/background-mobile.png";
+import Desktopbg from "/images/background-desktop.png";
+import Ticketbg from "/images/pattern-ticket.svg";
 
 const Ticket = () => {
   const navigate = useNavigate();
@@ -27,11 +27,7 @@ const Ticket = () => {
         className="hidden lg:grid bg-blend-screen bg-cover bg-no-repeat h-screen"
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
-          <img
-            src="/src/assets/images/logo-mark.svg"
-            className="w-6 h-6"
-            alt="Logo"
-          />
+          <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
           <h1 className="text-white font-bold text-xl">Coding Conf</h1>
         </div>
         <p className="text-white flex justify-center text-5xl">
@@ -53,11 +49,7 @@ const Ticket = () => {
 
         <div style={{ backgroundImage: `url(${Ticketbg})` }}>
           <div className="flex justify-center -ml-28  gap-2 pt-7">
-            <img
-              src="/src/assets/images/logo-mark.svg"
-              className="w-6 h-6"
-              alt="Logo"
-            />
+            <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
             <h1 className="text-white font-bold -mt-2   text-2xl">
               Coding Conf
             </h1>
@@ -93,11 +85,7 @@ const Ticket = () => {
         className=" lg:hidden bg-blend-screen bg-cover bg-no-repeat h-screen"
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
-          <img
-            src="/src/assets/images/logo-mark.svg"
-            className="w-6 h-6"
-            alt="Logo"
-          />
+          <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
           <h1 className="text-white  font-bold text-xl">Coding Conf</h1>
         </div>
         <p className="text-white flex mt-3 justify-center text-2xl">
@@ -119,11 +107,7 @@ const Ticket = () => {
 
         <div style={{ backgroundImage: `url(${Ticketbg})` }}>
           <div className="flex justify-center -ml-20  mt-3 gap-2 pt-7">
-            <img
-              src="/src/assets/images/logo-mark.svg"
-              className="w-6 h-6"
-              alt="Logo"
-            />
+            <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
             <h1 className="text-white font-bold -mt-2   text-2xl">
               Coding Conf
             </h1>

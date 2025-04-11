@@ -1,6 +1,6 @@
 import React, { useState } from "react";
-import Mobilebg from "../assets/images/background-mobile.png";
-import Desktopbg from "../assets/images/background-desktop.png";
+import Mobilebg from "/images/background-mobile.png";
+import Desktopbg from "/images/background-desktop.png";
 import { useNavigate } from "react-router-dom";
 
 const Form = () => {
@@ -76,11 +76,7 @@ const Form = () => {
         className="bg-cover bg-no-repeat lg:hidden"
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
-          <img
-            src="/src/assets/images/logo-mark.svg"
-            className="w-6 h-6"
-            alt="Logo"
-          />
+          <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
           <h1 className="text-white font-bold text-xl">Coding Conf</h1>
         </div>
         <p className="text-white text-center text-3xl font-bold font-sans pt-6">
@@ -95,7 +91,7 @@ const Form = () => {
           </label>
           <div className="border-2 border-dashed pt-3 pb-3 cursor-pointer bg-black/10 rounded-md border-white relative">
             <img
-              src="/src/assets/images/icon-upload.svg"
+              src="/images/icon-upload.svg"
               className="mx-auto h-10"
               alt="Upload Icon"
             />
@@ -182,11 +178,7 @@ const Form = () => {
         className="bg-cover bg-no-repeat hidden lg:grid"
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
-          <img
-            src="/src/assets/images/logo-mark.svg"
-            className="w-6 h-6"
-            alt="Logo"
-          />
+          <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
           <h1 className="text-white font-bold text-xl">Coding Conf</h1>
         </div>
         <p className="text-white text-center text-3xl font-bold font-sans pt-6">
@@ -206,7 +198,7 @@ const Form = () => {
           </label>
           <div className="border-2 border-dashed pt-3 pb-3 cursor-pointer bg-black/10 rounded-md border-white relative">
             <img
-              src="/src/assets/images/icon-upload.svg"
+              src="/images/icon-upload.svg"
               className="mx-auto h-10"
               alt="Upload Icon"
             />
