@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
-import Mobilebg from "/images/background-mobile.png";
-import Desktopbg from "/images/background-desktop.png";
-import Ticketbg from "/images/pattern-ticket.svg";
+import Mobilebg from "../assets/images/background-mobile.png";
+import Desktopbg from "../assets/images/background-desktop.png";
+import Ticketbg from "../assets/images/pattern-ticket.svg";
 
 const Ticket = () => {
   const navigate = useNavigate();
@@ -28,7 +28,7 @@ const Ticket = () => {
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
           <img
-            src="/public/images/logo-mark.svg"
+            src="/src/assets/images/logo-mark.svg"
             className="w-6 h-6"
             alt="Logo"
           />
@@ -54,7 +54,7 @@ const Ticket = () => {
         <div style={{ backgroundImage: `url(${Ticketbg})` }}>
           <div className="flex justify-center -ml-28  gap-2 pt-7">
             <img
-              src="/public/images/logo-mark.svg"
+              src="/src/assets/images/logo-mark.svg"
               className="w-6 h-6"
               alt="Logo"
             />
@@ -94,7 +94,7 @@ const Ticket = () => {
       >
         <div className="flex justify-center items-baseline gap-2 pt-7">
           <img
-            src="/public/images/logo-mark.svg"
+            src="/src/assets/images/logo-mark.svg"
             className="w-6 h-6"
             alt="Logo"
           />
@@ -120,7 +120,7 @@ const Ticket = () => {
         <div style={{ backgroundImage: `url(${Ticketbg})` }}>
           <div className="flex justify-center -ml-20  mt-3 gap-2 pt-7">
             <img
-              src="/public/images/logo-mark.svg"
+              src="/src/assets/images/logo-mark.svg"
               className="w-6 h-6"
               alt="Logo"
             />
