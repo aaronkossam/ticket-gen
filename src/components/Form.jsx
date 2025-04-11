@@ -1,239 +1,297 @@
-import React from "react";
+import React, { useState } from "react";
 import Mobilebg from "/images/background-mobile.png";
 import Desktopbg from "/images/background-desktop.png";
-import { useState } from "react";
 import { useNavigate } from "react-router-dom";
+
 const Form = () => {
-  const [initialvalues, setInitialvalues] = useState({
+  const navigate = useNavigate();
+  const [initialValues, setInitialValues] = useState({
     fullname: "",
     email: "",
     github: "",
-    file: "",
+    file: null, // Use null for file input
   });
-
-  const navigate = useNavigate();
-
   const [errors, setErrors] = useState({});
+
+  console.log("Current form data:", initialValues); // Debug form data
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    setErrors(validate(initialvalues));
+    const validationErrors = validate(initialValues);
+    console.log("Validation errors:", validationErrors); // Debug errors
+    setErrors(validationErrors);
+
+    if (Object.keys(validationErrors).length === 0) {
+      console.log("Navigating to /ticket with data:", initialValues); // Debug navigation
+      // Persist to localStorage (excluding file)
+      localStorage.setItem(
+        "formData",
+        JSON.stringify({
+          fullname: initialValues.fullname,
+          email: initialValues.email,
+          github: initialValues.github,
+        })
+      );
+      // Handle file separately as a data URL
+      if (initialValues.file) {
+        const reader = new FileReader();
+        reader.onload = () => {
+          localStorage.setItem("formImage", reader.result);
+          navigate("/ticket");
+        };
+        reader.readAsDataURL(initialValues.file);
+      } else {
+        localStorage.setItem("formImage", null);
+        navigate("/ticket");
+      }
+    }
   };
 
-  const validate = () => {
+  const validate = (values) => {
     const errors = {};
     const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-    if (!initialvalues.fullname) {
-      errors.fullname = "Full name is required";
-    }
-    if (!initialvalues.email) {
-      errors.email = "Email is required";
-    }
-    if (!initialvalues.github) {
-      errors.github = "Github username is required";
-    }
-    if (!initialvalues.file) {
-      errors.file = "Your photo is required";
-    }
-    if (Object.keys(errors).length === 0) {
-      alert("Form submitted successfully!");
-    }
+    if (!values.fullname) errors.fullname = "Full name is required";
+    if (!values.email) errors.email = "Email is required";
+    else if (!regex.test(values.email)) errors.email = "Invalid email format";
+    if (!values.github) errors.github = "GitHub username is required";
+    if (!values.file) errors.file = "Your photo is required";
 
     return errors;
   };
 
   const handleChange = (e) => {
-    const { name, value } = e.target;
-    setInitialvalues((prev) => ({
+    const { name, value, files } = e.target;
+    setInitialValues((prev) => ({
       ...prev,
-      [name]: value,
+      [name]: files ? files[0] : value,
     }));
   };
 
   return (
     <div>
-      {/* {mobile} */}
+      {/* Mobile View */}
       <div
-        style={{
-          backgroundImage: `url(${Mobilebg})`,
-        }}
-        className=" bg-cover bg-no-repeat   lg:hidden  "
+        style={{ backgroundImage: `url(${Mobilebg})` }}
+        className="bg-cover bg-no-repeat lg:hidden"
       >
-        <div className=" flex justify-center align-baseline gap-2 pt-7">
+        <div className="flex justify-center items-baseline gap-2 pt-7">
           <img
             src="/public/images/logo-mark.svg"
-            className=" w-6 h-6 "
-            alt=""
+            className="w-6 h-6"
+            alt="Logo"
           />
-          <h1 className="text-white font-bold text-xl -mt-1">Coding Conf</h1>
+          <h1 className="text-white font-bold text-xl">Coding Conf</h1>
         </div>
-        <p className=" text-white text-center text-3xl font-bold font-sans pt-6">
-          Your Journey To Coding Conf 2025 Start Here!
+        <p className="text-white text-center text-3xl font-bold font-sans pt-6">
+          Your Journey To Coding Conf 2025 Starts Here!
         </p>
-        <p className=" text-white  text-center pt-4 text-xl  font-serif">
-          Secure your spot at the year's{" "}
+        <p className="text-white text-center pt-4 text-xl font-serif">
+          Secure your spot at the year's biggest coding conference
         </p>
-        <p className=" text-white   text-center pt-4 text-xl -mt-4  font-serif">
-          biggest coding conference
-        </p>
-        <form
-          onSubmit={handleSubmit}
-          className=" grid gap-4 pt-7 ml-4 mr-4 lg:justify-center"
-        >
-          <label className=" text-white -mb-12 ">Upload Avater </label>,
-          <div className=" border-2 border-dashed pt-3 pb-3   cursor-pointer bg-black/10 rounded-md border-white ">
+        <form onSubmit={handleSubmit} className="grid gap-4 pt-7 ml-4 mr-4">
+          <label htmlFor="file" className="text-white">
+            Upload Avatar
+          </label>
+          <div className="border-2 border-dashed pt-3 pb-3 cursor-pointer bg-black/10 rounded-md border-white relative">
             <img
               src="../public/images/icon-upload.svg"
-              className="pl-40 h-10"
-              alt=""
+              className="mx-auto h-10"
+              alt="Upload Icon"
             />
-            <p className="text-white flex  justify-center">
+            <p className="text-white text-center">
               Drag & Drop or click to upload
             </p>
             <input
-              className="opacity-0"
+              id="file"
               type="file"
-              value={initialvalues.file}
-              onChange={handleChange}
               name="file"
-            ></input>
+              onChange={handleChange}
+              accept="image/jpeg,image/png"
+              className="absolute opacity-0 w-full h-full top-0 left-0 cursor-pointer"
+            />
           </div>
-          <p className=" text-white text-sm">
-            upload your photo(jpg or png ,max size:500kg)
+          <p className="text-white text-sm">
+            Upload your photo (jpg or png, max size: 500kb)
           </p>
-          {errors.file && <p className="text-red-500">{errors.file}</p>}
-          <label className="  text-white text-xl  font-sans ">Full name </label>
+          {errors.file && <p className="text-red-500 text-sm">{errors.file}</p>}
+
+          <label htmlFor="fullname" className="text-white text-xl font-sans">
+            Full Name
+          </label>
           <input
+            id="fullname"
             type="text"
-            value={initialvalues.fullname}
-            onChange={handleChange}
             name="fullname"
-            placeholder=""
-            className=" p-4    bg-black/35 text-white  outline-none   rounded-md  "
-          ></input>
-          {errors.fullname && <p className="text-red-500">{errors.fullname}</p>}
-          <label className=" text-white text-xl  font-sans ">
-            Email address{" "}
+            value={initialValues.fullname}
+            onChange={handleChange}
+            placeholder="Full name"
+            autoComplete="name"
+            className="p-4 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.fullname && (
+            <p className="text-red-500 text-sm">{errors.fullname}</p>
+          )}
+
+          <label htmlFor="email" className="text-white text-xl font-sans">
+            Email Address
           </label>
           <input
-            className="p-4  bg-black/35 text-white  outline-none   rounded-md  "
-            type="text"
-            value={initialvalues.email}
-            onChange={handleChange}
+            id="email"
+            type="email"
             name="email"
-            placeholder="email address"
-          ></input>
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
-          <label className=" text-white text-xl  font-sans ">
-            Github Username{" "}
+            value={initialValues.email}
+            onChange={handleChange}
+            placeholder="email@example.com"
+            autoComplete="email"
+            className="p-4 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+
+          <label htmlFor="github" className="text-white text-xl font-sans">
+            GitHub Username
           </label>
           <input
-            className="p-4  bg-black/35 text-white  outline-none   rounded-md  "
+            id="github"
             type="text"
-            value={initialvalues.github}
+            name="github"
+            value={initialValues.github}
             onChange={handleChange}
-            name="gitgub"
             placeholder="@yourusername"
-          ></input>
-          {errors.github && <p className="text-red-500">{errors.github}</p>}
+            autoComplete="username"
+            className="p-4 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.github && (
+            <p className="text-red-500 text-sm">{errors.github}</p>
+          )}
+
           <button
             type="submit"
-            className=" font-bold  text-secondary  border-2 p-3 rounded-md text-xl  mb-4  bg-primary border-primary "
+            className="font-bold text-secondary border-2 p-3 rounded-md text-xl bg-primary border-primary"
           >
-            Generate My Ticket{" "}
+            Generate My Ticket
           </button>
         </form>
       </div>
-      {/* {Desktop} */}
+
+      {/* Desktop View */}
       <div
         style={{ backgroundImage: `url(${Desktopbg})` }}
-        className=" bg-cover bg-no-repeat  hidden lg:grid"
+        className="bg-cover bg-no-repeat hidden lg:grid"
       >
-        <div className=" flex justify-center align-baseline gap-2 pt-7">
+        <div className="flex justify-center items-baseline gap-2 pt-7">
           <img
             src="/public/images/logo-mark.svg"
-            className=" w-6 h-6 "
-            alt=""
+            className="w-6 h-6"
+            alt="Logo"
           />
-          <h1 className="text-white font-bold text-xl -mt-1">Coding Conf</h1>
+          <h1 className="text-white font-bold text-xl">Coding Conf</h1>
         </div>
-        <p className=" text-white text-center text-3xl font-bold font-sans pt-6">
-          Your Journey To Coding Conf<br></br>
-          2025 Start Here!
+        <p className="text-white text-center text-3xl font-bold font-sans pt-6">
+          Your Journey To Coding Conf
+          <br />
+          2025 Starts Here!
         </p>
-        <p className=" text-white  text-center pt-4 text-xl  font-serif">
+        <p className="text-white text-center pt-4 text-xl font-serif">
           Secure your spot at the year's biggest coding conference
         </p>
         <form
           onSubmit={handleSubmit}
-          className=" grid gap-4 pt-7 ml-4 mr-4 lg:justify-center mb-14"
+          className="grid gap-4 pt-7 ml-4 mr-4 lg:max-w-lg lg:mx-auto mb-14"
         >
-          <label className=" text-white -mb-12 ">Upload Avater </label>,
-          <div className=" border-2 border-dashed pt-3 pb-3 pl-24 pr-24  cursor-pointer bg-black/10 rounded-md border-white ">
+          <label htmlFor="file-desktop" className="text-white">
+            Upload Avatar
+          </label>
+          <div className="border-2 border-dashed pt-3 pb-3 cursor-pointer bg-black/10 rounded-md border-white relative">
             <img
               src="../public/images/icon-upload.svg"
-              className="pl-32 h-10"
-              alt=""
+              className="mx-auto h-10"
+              alt="Upload Icon"
             />
-            <p className="text-white flex  justify-center">
+            <p className="text-white text-center">
               Drag & Drop or click to upload
             </p>
             <input
-              className="opacity-0"
+              id="file-desktop"
               type="file"
-              value={initialvalues.file}
-              onChange={handleChange}
               name="file"
-            ></input>
+              onChange={handleChange}
+              accept="image/jpeg,image/png"
+              className="absolute opacity-0 w-full h-full top-0 left-0 cursor-pointer"
+            />
           </div>
-          <p className=" text-white text-sm">
-            upload your photo(jpg or png ,max size:500kg)
+          <p className="text-white text-sm">
+            Upload your photo (jpg or png, max size: 500kb)
           </p>
-          {errors.file && <p className="text-red-500">{errors.file}</p>}
-          <label className="  text-white text-xl  font-sans ">Full name </label>
+          {errors.file && <p className="text-red-500 text-sm">{errors.file}</p>}
+
+          <label
+            htmlFor="fullname-desktop"
+            className="text-white text-xl font-sans"
+          >
+            Full Name
+          </label>
           <input
-            {...errors.fullname}
+            id="fullname-desktop"
             type="text"
-            value={initialvalues.fullname}
-            onChange={handleChange}
             name="fullname"
-            placeholder=""
-            className=" p-3  bg-black/35 text-white
-              outline-none   rounded-md  "
-          ></input>
-          {errors.fullname && <p className="text-red-500">{errors.fullname}</p>}
-          <label className=" text-white text-xl  font-sans ">
-            Email address{" "}
+            value={initialValues.fullname}
+            onChange={handleChange}
+            placeholder="Full name"
+            autoComplete="name"
+            className="p-3 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.fullname && (
+            <p className="text-red-500 text-sm">{errors.fullname}</p>
+          )}
+
+          <label
+            htmlFor="email-desktop"
+            className="text-white text-xl font-sans"
+          >
+            Email Address
           </label>
           <input
-            className="p-3  bg-black/35 text-white  outline-none   rounded-md  "
-            type="text"
-            value={initialvalues.email}
-            onChange={handleChange}
+            id="email-desktop"
+            type="email"
             name="email"
-            {...errors}
-            placeholder="email address"
-          ></input>
-          {errors.email && <p className="text-red-500">{errors.email}</p>}
-          <label className=" text-white text-xl  font-sans ">
-            Github Username{" "}
+            value={initialValues.email}
+            onChange={handleChange}
+            placeholder="email@example.com"
+            autoComplete="email"
+            className="p-3 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.email && (
+            <p className="text-red-500 text-sm">{errors.email}</p>
+          )}
+
+          <label
+            htmlFor="github-desktop"
+            className="text-white text-xl font-sans"
+          >
+            GitHub Username
           </label>
           <input
-            {...errors.github}
-            className="p-3  bg-black/35 text-white  outline-none   rounded-md  "
+            id="github-desktop"
             type="text"
-            value={initialvalues.github}
-            onChange={handleChange}
             name="github"
+            value={initialValues.github}
+            onChange={handleChange}
             placeholder="@yourusername"
-          ></input>
-          {errors.github && <p className="text-red-500">{errors.github}</p>}
+            autoComplete="username"
+            className="p-3 bg-black/35 text-white outline-none rounded-md"
+          />
+          {errors.github && (
+            <p className="text-red-500 text-sm">{errors.github}</p>
+          )}
+
           <button
             type="submit"
-            className=" text-secondary  border-2 p-3 rounded-md text-xl bg-primary border-primary "
+            className="font-bold text-secondary border-2 p-3 rounded-md text-xl bg-primary border-primary  "
           >
-            Generate My Ticket{" "}
+            Generate My Ticket
           </button>
         </form>
       </div>
