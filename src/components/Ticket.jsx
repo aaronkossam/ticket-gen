@@ -47,8 +47,11 @@ const Ticket = () => {
           <p>the run up to the event </p>
         </div>
 
-        <div style={{ backgroundImage: `url(${Ticketbg})` }}>
-          <div className="flex justify-center -ml-28  gap-2 pt-7">
+        <div
+          style={{ backgroundImage: `url(${Ticketbg})` }}
+          className="  bg-cover bg-no-repeat h-screen "
+        >
+          <div className="flex justify-center   gap-2 pt-7">
             <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
             <h1 className="text-white font-bold -mt-2   text-2xl">
               Coding Conf
@@ -105,7 +108,10 @@ const Ticket = () => {
           <p>the run up to the event </p>
         </div>
 
-        <div style={{ backgroundImage: `url(${Ticketbg})` }}>
+        <div
+          style={{ backgroundImage: `url(${Ticketbg})` }}
+          className="  bg-cover bg-no-repeat h-screen "
+        >
           <div className="flex justify-center -ml-20  mt-3 gap-2 pt-7">
             <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
             <h1 className="text-white font-bold -mt-2   text-2xl">
