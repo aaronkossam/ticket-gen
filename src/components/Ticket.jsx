@@ -34,7 +34,7 @@ const Ticket = () => {
           Congrats,{" "}
           <span className="text-primary font-bold"> {formData.fullname}! </span>
         </p>
-        <p className="text-white -mt-12 text-3xl flex justify-center">
+        <p className="text-white mt-4 text-3xl flex justify-center">
           {" "}
           Your ticket is ready.
         </p>
@@ -48,8 +48,14 @@ const Ticket = () => {
         </div>
 
         <div
-          style={{ backgroundImage: `url(${Ticketbg})` }}
-          className="  bg-cover bg-no-repeat h-screen "
+          style={{
+            marginLeft: "25rem",
+            marginRight: "25rem",
+            marginBottom: "5rem",
+            borderBottomLeftRadius: "4rem",
+            borderTopRightRadius: "4rem",
+          }}
+          className="  border-2 border-white   bg-secondary text-black pb-3 -mt-0 shadow-white  "
         >
           <div className="flex justify-center   gap-2 pt-7">
             <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
@@ -57,7 +63,7 @@ const Ticket = () => {
               Coding Conf
             </h1>
           </div>
-          <p className="text-white  -ml-24 font-thin text-center">
+          <p className="text-white   font-thin text-center">
             jan 31, 2025 / Austin, Tx
           </p>
 
@@ -74,7 +80,7 @@ const Ticket = () => {
               <p>No image uploaded</p>
             )}
 
-            <div className="grid text-white">
+            <div className="grid font-mono text-white">
               <span>{formData.fullname}</span>
               <span className="-mt-2">{formData.github}</span>
             </div>
@@ -109,10 +115,13 @@ const Ticket = () => {
         </div>
 
         <div
-          style={{ backgroundImage: `url(${Ticketbg})` }}
-          className="  bg-cover bg-no-repeat h-screen "
+          style={{
+            borderBottomLeftRadius: "4rem",
+            borderTopRightRadius: "4rem",
+          }}
+          className="    border-2 border-white   bg-secondary text-black pb-3 m-4 shadow-white "
         >
-          <div className="flex justify-center -ml-20  mt-3 gap-2 pt-7">
+          <div className="  flex justify-center -ml-20  mt-3 gap-2 pt-7">
             <img src="/images/logo-mark.svg" className="w-6 h-6" alt="Logo" />
             <h1 className="text-white font-bold -mt-2   text-2xl">
               Coding Conf
@@ -135,7 +144,7 @@ const Ticket = () => {
               <p>No image uploaded</p>
             )}
 
-            <div className="grid text-white">
+            <div className="grid font-mono text-white">
               <span>{formData.fullname}</span>
               <span className="-mt-2">{formData.github}</span>
             </div>

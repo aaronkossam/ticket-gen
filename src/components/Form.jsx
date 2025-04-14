@@ -165,7 +165,7 @@ const Form = () => {
 
           <button
             type="submit"
-            className="font-bold text-secondary border-2 p-3 rounded-md text-xl bg-primary border-primary"
+            className="font-bold text-secondary border-2 p-3 rounded-md text-xl  bg-primary border-primary mt-2 mb-6"
           >
             Generate My Ticket
           </button>
@@ -281,7 +281,7 @@ const Form = () => {
 
           <button
             type="submit"
-            className="font-bold text-secondary border-2 p-3 rounded-md text-xl bg-primary border-primary  "
+            className="font-bold text-secondary border-2 p-3 rounded-md text-xl bg-primary border-primary   "
           >
             Generate My Ticket
           </button>
